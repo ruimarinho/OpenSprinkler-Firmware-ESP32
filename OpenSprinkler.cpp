@@ -1089,14 +1089,14 @@ void OpenSprinkler::begin() {
 	//DEBUG_PRINTLN("ESP32");
 
     hw_type = HW_TYPE_AC;
-    
+
 	// PIN_RFRX = E0_PIN_RFRX;
 	// PIN_RFTX = E0_PIN_RFTX;
 	// PIN_BOOST = E0_PIN_BOOST;
 	// PIN_BOOST_EN = E0_PIN_BOOST_EN;
 	PIN_SENSOR1 = E0_PIN_SENSOR1;
 	PIN_SENSOR2 = E0_PIN_SENSOR2;
-  	
+
 	#if defined(ETHPORT)
 		hw_rev = 2;
 	#else
@@ -1118,7 +1118,7 @@ void OpenSprinkler::begin() {
 	DEBUG_PRINTLN(F("Driver class initiated"));
 	drio->set_pins_output_mode();
 	DEBUG_PRINTLN("PIN SETUP COMPLETE");
-  #endif	
+  #endif
 	// ROTARY ENCODER not supported now
 	#if ! defined(USE_ROTARY_ENCODER)
 		PIN_BUTTON_1 = E0_PIN_BUTTON_1;
@@ -1127,7 +1127,7 @@ void OpenSprinkler::begin() {
 		
 		pinMode(PIN_BUTTON_1, INPUT_PULLUP);
 		pinMode(PIN_BUTTON_2, INPUT_PULLUP);
-		pinMode(PIN_BUTTON_3, INPUT_PULLUP);
+		//pinMode(PIN_BUTTON_3, INPUT_PULLUP);
 	#else
 		DEBUG_PRINTLN(F("Rotary encoder enabled"));
 		PIN_BUTTON_1 = ROTARY_ENCODER_A_PIN;
@@ -1402,7 +1402,7 @@ pinModeExt(PIN_BUTTON_3, INPUT_PULLUP);
 	// enable internal pullup
 	pinModeExt(PIN_BUTTON_1, INPUT_PULLUP);
 	pinModeExt(PIN_BUTTON_2, INPUT_PULLUP);
-	pinModeExt(PIN_BUTTON_3, INPUT_PULLUP);
+	//pinModeExt(PIN_BUTTON_3, INPUT_PULLUP);
 
 	// Rotary knob setup should happen here!
 
@@ -2873,7 +2873,7 @@ void OpenSprinkler::options_setup() {
 		lcd_print_line_clear_pgm(PSTR("OpenSprinkler"),0);
 		#if defined(ESP32)
 		lcd.setCursor(0, 2);
-		lcd_print_line_clear_pgm(PSTR("ESP32 ver - V1pr"),2);
+		lcd_print_line_clear_pgm(PSTR("ESP32 version"),2);
 		#endif
 		lcd.setCursor((hw_type==HW_TYPE_LATCH)?2:4, 1);
 		lcd_print_pgm(PSTR("v"));
@@ -3290,10 +3290,11 @@ void OpenSprinkler::lcd_print_screen(char c) {
 		}
 
 	#if defined(ESP8266) || defined(ESP32)
-		lcd.setCursor(2, 2);
 		if(status.program_busy && !status.pause_state) {
-			//lcd.print(F("Curr: "));
 			#if ! defined(ESP32) || ( defined(ESP32) && PIN_CURR_SENSE != 255 )
+			lcd.setCursor(0, 2);
+			lcd.print(F("                "));
+			lcd.setCursor(2, 2);
 			lcd.print(read_current(true));
 			lcd.print(F(" mA      "));
 			#endif

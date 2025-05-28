@@ -30,11 +30,11 @@
 //#define ETHPORT // uncoment when palnning to use wired etherner
 
 // override of default I2C pins 21/22
-#define SDA_PIN SDA
-#define SCL_PIN SCL
+#define SDA_PIN 21
+#define SCL_PIN 22
 #define LCD_I2CADDR      0x3c // 128x64 OLED display I2C address
 
-#define IOEXP_PIN        0x99 // base for pins on main IO expander
+#define IOEXP_PIN        0x80 // base for pins on main IO expander
 
 /*  ESP32 port support only AC mode as DC and Latch need dedicated HW
  *  Dont need this to declare and search for Main IO controller and  
@@ -66,32 +66,34 @@
   extern unsigned char PIN_IOEXP_INT;
 
 
-  #define E0_PIN_BUTTON_1      18 // button 1 - v1pr 18, default 25
-  #define E0_PIN_BUTTON_2      5 // button 2 - v1pr 5, default 0
-  #define E0_PIN_BUTTON_3      17 // button 3 - v1pr 17, default 26
+  #define E0_IO_CONFIG         0x1F00 // config bits
+  #define E0_IO_OUTPUT         0x1F00 // output bits
+  #define E0_PIN_BUTTON_1      4 // button 1 - v1pr 18, default 25
+  #define E0_PIN_BUTTON_2      0 // button 2 - v1pr 5, default 0
+  #define E0_PIN_BUTTON_3      IOEXP_PIN+12 // button 3 - v1pr 17, default 26
   #define E0_PIN_RFRX          255
   #define E0_PIN_RFTX          255
   #define E0_PIN_BOOST         255 // special HW needed
   #define E0_PIN_BOOST_EN      255 // special HW needed
   #define E0_PIN_LATCH_COM     255 // not needed for ESP32
-  #define E0_PIN_SENSOR1       39 // sensor 1 - v1pr 39, default 36
-  #define E0_PIN_SENSOR2       33 // sensor 2  - v1pr 33, default 2
+  #define E0_PIN_SENSOR1       15 // sensor 1 - v1pr 39, default 36
+  #define E0_PIN_SENSOR2       14 // sensor 2  - v1pr 33, default 2
   #define E0_PIN_IOEXP_INT     255 // not needed for ESP32
  
   #define PIN_ETHER_CS         255 // ENC28J60 CS (chip select pin) is 16 on OS 3.2.
 
-  #define USE_IOEXP_SR 1 // use Shift-register as station setting - uncomment this to use built-in gpio style, default 0
+  #define USE_IOEXP_SR 0 // use Shift-register as station setting - uncomment this to use built-in gpio style, default 0
   
   // default
   // #define ON_BOARD_GPIN_LIST     {12,13,14,15,16,255,255,255} //  ESP32 on board pins to be used as sections, 255 = pin not defined
   // v1pr's board, these are the GPIO pins user for stations - IOEXP PCF/PCA not (yet) supported
-  #define ON_BOARD_GPIN_LIST     {2,4,255,255,255,255,255,255} // was 2,4
+  #define ON_BOARD_GPIN_LIST     {255,255,255,255,255,255,255,255} // was 2,4
   #define PIN_FREE_LIST     {} // no free GPIO pin at the moment
 
   // if set to a real ADC pin, than it means the board has current sensor capabilities
-  #define PIN_CURR_SENSE      255 // not used on v1pr's board, so 255, defaut 39
+  #define PIN_CURR_SENSE      34 // not used on v1pr's board, so 255, defaut 39
   
-  #define STATION_LOGIC 1 // Zone output logic for relays - 1 => HIGH in ON, 0 => LOW is ON - v1pr board: 1
+  #define STATION_LOGIC 0 // Zone output logic for relays - 1 => HIGH in ON, 0 => LOW is ON - v1pr board: 1
 
   // Rotary Encoder instead of buttons - not used for now, testing/development
   //#define USE_ROTARY_ENCODER

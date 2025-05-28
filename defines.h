@@ -477,8 +477,8 @@ enum {
 
 
 	#define USE_DISPLAY
-	//#define USE_SSD1306 // 0.96"
-	#define USE_SH1106 // 1.3"
+	#define USE_SSD1306 // 0.96"
+	//#define USE_SH1106 // 1.3"
 	
 	#include "esp32.h"
 
