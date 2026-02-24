@@ -1262,7 +1262,9 @@ void server_json_controller_main(OTF_PARAMS_DEF) {
 
 #if defined(ESP8266) || defined(ESP32)
 	bfill.emit_p(PSTR("\"RSSI\":$D,"), (int16_t)WiFi.RSSI());
+	#if defined(ESP8266)
 	bfill.emit_p(PSTR("\"apdv\":$D,"), os.actual_pd_voltage);
+	#endif
 #endif
 
 #if defined(USE_OTF)

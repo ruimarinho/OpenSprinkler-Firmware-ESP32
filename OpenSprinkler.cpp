@@ -114,8 +114,10 @@ extern unsigned char curr_alert_sid;
 	unsigned char OpenSprinkler::wifi_bssid[6]={0};
 	unsigned char OpenSprinkler::wifi_channel=255;
 	unsigned char OpenSprinkler::wifi_testmode = 0;
+	#if defined(ESP8266)
 	CH224 OpenSprinkler::usbpd;
 	uint8_t OpenSprinkler::actual_pd_voltage = 0;
+	#endif
 #elif defined(ARDUINO)
 	extern SdFat sd;
 #else

@@ -490,8 +490,10 @@ public:
 	#if defined(ESP8266) || defined(ESP32)
 	static IOEXP *mainio, *drio;
 	static IOEXP *expanders[];
+	#if defined(ESP8266)
 	static CH224 usbpd;
 	static uint8_t actual_pd_voltage;
+	#endif
 
 	static void detect_expanders();
 	static unsigned char get_wifi_mode() { if (useEth) return WIFI_MODE_STA; else return wifi_testmode ? WIFI_MODE_STA : iopts[IOPT_WIFI_MODE];}
@@ -502,7 +504,9 @@ public:
 	static void save_wifi_ip();
 	static void reset_to_ap();
 	static unsigned char state;
+	#if defined(ESP8266)
 	static void setup_pd_voltage();
+	#endif
 	#endif
 
 #else
